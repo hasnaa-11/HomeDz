@@ -5,9 +5,14 @@
 
     <group android:checkableBehavior="single">
         <item
+            android:id="@+id/nav_home"
+            android:icon="@drawable/ic_home_black_24dp"
+            android:title="@string/menu_home" />
+
+        <item
             android:id="@+id/nav_rech_annonce"
             android:icon="@drawable/ic_searche"
-            android:title="@string/menu_home" />
+            android:title="@string/menurecherche" />
         <item
             android:id="@+id/nav_ajouter_annonce"
             android:icon="@drawable/ic_add_circle_outline_black_24dp"

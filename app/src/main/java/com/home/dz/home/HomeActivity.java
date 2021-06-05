@@ -22,7 +22,8 @@ import android.widget.TextView;
 import com.home.dz.R;
 import com.home.dz.bean.Factory;
 import com.home.dz.home.annonce.AddHomeActivity;
-import com.home.dz.home.annonce.ListeAnnoncesFragment;
+import com.home.dz.home.annonce.HomeFragment;
+import com.home.dz.home.annonce.ListeAnnoncesActivity;
 import com.home.dz.home.annonce.MesAnnonceFragment;
 import com.home.dz.home.annonce.MesFavorisFragment;
 
@@ -38,7 +39,7 @@ public class HomeActivity extends AppCompatActivity
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        fragment = new ListeAnnoncesFragment(this);
+        fragment = new HomeFragment();
         replaceFragment(fragment);
         toolbar.setTitle("Annonces");
 
@@ -109,8 +110,8 @@ public class HomeActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_rech_annonce) {
-            fragment = new ListeAnnoncesFragment(this);
-            replaceFragment(fragment);
+            Intent ajouterAnnonce = new Intent(this, ListeAnnoncesActivity.class);
+            startActivity(ajouterAnnonce);
             // Handle the camera action
         } else if (id == R.id.nav_ajouter_annonce) {
 
@@ -122,6 +123,9 @@ public class HomeActivity extends AppCompatActivity
             replaceFragment(fragment);
         } else if (id == R.id.nav_mes_favoris) {
             fragment = new MesFavorisFragment(this);
+            replaceFragment(fragment);
+        } else if (id == R.id.nav_home) {
+            fragment = new HomeFragment();
             replaceFragment(fragment);
         } else if (id == R.id.nav_deconnecter) {
             finish();

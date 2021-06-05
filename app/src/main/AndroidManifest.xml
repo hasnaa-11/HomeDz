@@ -14,18 +14,21 @@
         android:supportsRtl="true"
         android:theme="@style/noActionBar">
         <activity
+            android:name=".home.annonce.ListeAnnoncesActivity"
+            android:label="@string/title_activity_liste_annonces"></activity>
+        <activity
             android:name=".home.annonce.AfficherAnnonceActivity"
-            android:theme="@style/AppTheme"
-            android:label="Afficher l'annonce"/>
+            android:label="Afficher l&apos;annonce"
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".home.annonce.AddHomeActivity"
-            android:theme="@style/AppTheme"
-            android:label="Ajouter une annonce"/>
+            android:label="Ajouter une annonce"
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".home.HomeActivity"
             android:label="@string/title_activity_home"
             android:theme="@style/noActionBar.NoActionBar" />
-        <activity android:name=".user.NewAccountActivity"/>
+        <activity android:name=".user.NewAccountActivity" />
         <activity android:name=".user.LoginActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>

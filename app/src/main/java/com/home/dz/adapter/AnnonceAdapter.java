@@ -11,11 +11,11 @@ import android.widget.TextView;
 
 import com.home.dz.R;
 import com.home.dz.bean.Home;
-import com.home.dz.home.HomeActivity;
 import com.home.dz.home.annonce.AfficherAnnonceActivity;
-import com.home.dz.home.annonce.ListeAnnoncesFragment;
+import com.home.dz.home.annonce.ListeAnnoncesActivity;
 
 
+import com.home.dz.home.annonce.listannonces.ListeAnnonceFragment;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -24,11 +24,11 @@ public class AnnonceAdapter extends RecyclerView.Adapter<AnnonceAdapter.MyViewHo
 
 
     private List<Home> homeList;
-    private HomeActivity activity;
-    private ListeAnnoncesFragment fragment;
+    private ListeAnnoncesActivity activity;
+    private ListeAnnonceFragment fragment;
 
 
-    public AnnonceAdapter(ListeAnnoncesFragment fragment, List<Home> homeList, HomeActivity activity) {
+    public AnnonceAdapter(ListeAnnonceFragment fragment, List<Home> homeList, ListeAnnoncesActivity activity) {
         this.homeList = homeList;
         this.activity = activity;
         this.fragment = fragment;
