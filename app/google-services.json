@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "60889994207",
+    "firebase_url": "https://homedz-34168-default-rtdb.firebaseio.com",
+    "project_id": "homedz-34168",
+    "storage_bucket": "homedz-34168.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:60889994207:android:d6b01735377648890e6a6a",
+        "android_client_info": {
+          "package_name": "com.home.dz"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "60889994207-oa4sh04g1co6stn6tq7qpl3qojsa4d81.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAGzOTLGrETq9SQTH6MZdlgaDRI9Y9ttII"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "60889994207-oa4sh04g1co6stn6tq7qpl3qojsa4d81.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
