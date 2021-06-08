@@ -91,7 +91,7 @@ public class AnnonceAdapter extends RecyclerView.Adapter<AnnonceAdapter.MyViewHo
 
         holder.titre.setText(home.getTitre());
         holder.prix.setText(home.getPrix() + " DA");
-        Picasso.get().load(home.getUrlPhoto()).into(holder.photo);
+        Picasso.get().load(home.getUrlPhotos().get(0)).into(holder.photo);
 
     }
 

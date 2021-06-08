@@ -37,13 +37,13 @@ import java.util.List;
 public class AfficherAnnonceActivity extends AppCompatActivity implements View.OnClickListener, OnMapReadyCallback {
 
     private TextView titre, description, prix, adresse, surfcae, wilaya, email, phone, user;
-    private ImageView photo, call;
+    private ImageView photo, call, imageLeft, imageRight;
     private Home home;
     private MapView mapView;
     private static final String SOURCE_ID = "SOURCE_ID";
     private static final String ICON_ID = "ICON_ID";
     private static final String LAYER_ID = "LAYER_ID";
-
+    private int index = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +57,8 @@ public class AfficherAnnonceActivity extends AppCompatActivity implements View.O
 
         home = (Home) intent.getSerializableExtra("home");
 
+        imageLeft = findViewById(R.id.imageleft_img);
+        imageRight = findViewById(R.id.imageright_img);
         titre = findViewById(R.id.affi_titre_tv);
         description = findViewById(R.id.affi_desc_tv);
         prix = findViewById(R.id.affi_prix_tv);
@@ -75,6 +77,8 @@ public class AfficherAnnonceActivity extends AppCompatActivity implements View.O
 
 
         call.setOnClickListener(this);
+        imageRight.setOnClickListener(this);
+        imageLeft.setOnClickListener(this);
 
         titre.setText(home.getTitre());
         description.setText(home.getDescription());
@@ -82,13 +86,10 @@ public class AfficherAnnonceActivity extends AppCompatActivity implements View.O
         adresse.setText(home.getAdresse());
         wilaya.setText(home.getWilaya());
         surfcae.setText(Float.toString(home.getSurface()));
-        Picasso.get().load(home.getUrlPhoto()).into(photo);
+        Picasso.get().load(home.getUrlPhotos().get(index)).into(photo);
         email.setText(home.getUser().getEmail());
         phone.setText(home.getUser().getPhone());
         user.setText("Contacter" + home.getUser().getPrenom() + " " + home.getUser().getNom());
-
-
-
 
     }
 
@@ -136,8 +137,30 @@ public class AfficherAnnonceActivity extends AppCompatActivity implements View.O
 
     @Override
     public void onClick(View v) {
-        Intent intent = new Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", home.getUser().getPhone(), null));
-        startActivity(intent);
+
+        int id = v.getId();
+
+        if(id == R.id.affi_call_img){
+            Intent intent = new Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", home.getUser().getPhone(), null));
+            startActivity(intent);
+        }
+
+        if(id == R.id.imageright_img){
+
+            if(index < home.getUrlPhotos().size()){
+                index ++;
+                Picasso.get().load(home.getUrlPhotos().get(index)).into(photo);
+            }
+        }
+
+        if(id == R.id.imageleft_img){
+
+            if(index >0){
+                index --;
+                Picasso.get().load(home.getUrlPhotos().get(index)).into(photo);
+            }
+        }
+
     }
 
     @Override

@@ -1,16 +1,26 @@
 package com.home.dz.bean;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class Home implements Serializable {
 
     private User user;
-    private String idHome, titre, description, adresse, wilaya, urlPhoto;
+    private String idHome, titre, description, adresse, wilaya;
+    private List<String> urlPhotos;
     private long prix;
     private float surface;
     private double latitude, longitude;
 
     public Home() {
+    }
+
+    public List<String> getUrlPhotos() {
+        return urlPhotos;
+    }
+
+    public void setUrlPhotos(List<String> urlPhotos) {
+        this.urlPhotos = urlPhotos;
     }
 
     public String getIdHome() {
@@ -59,14 +69,6 @@ public class Home implements Serializable {
 
     public void setWilaya(String wilaya) {
         this.wilaya = wilaya;
-    }
-
-    public String getUrlPhoto() {
-        return urlPhoto;
-    }
-
-    public void setUrlPhoto(String urlPhoto) {
-        this.urlPhoto = urlPhoto;
     }
 
     public long getPrix() {

@@ -64,7 +64,9 @@ public class FavorisDataHelper extends SQLiteOpenHelper {
             home.setPrix(Long.parseLong(prix));
             home.setSurface(Float.parseFloat(surface));
             home.setWilaya(wilaya);
-            home.setUrlPhoto(image);
+            List<String> photos = new ArrayList<>();
+            photos.add(image);
+            home.setUrlPhotos(photos);
 
             User user = new User();
             user.setEmail(userEmail);
@@ -95,7 +97,7 @@ public class FavorisDataHelper extends SQLiteOpenHelper {
         contentValues.put("prix", Long.toString(home.getPrix()));
         contentValues.put("surface", Float.toHexString(home.getSurface()));
         contentValues.put("wilaya", home.getWilaya());
-        contentValues.put("image", home.getUrlPhoto());
+        contentValues.put("image", home.getUrlPhotos().get(0));
         contentValues.put("userNom", home.getUser().getNom());
         contentValues.put("userPrenom", home.getUser().getPrenom());
         contentValues.put("userEmail", home.getUser().getEmail());

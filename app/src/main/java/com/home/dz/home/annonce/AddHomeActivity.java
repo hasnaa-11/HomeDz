@@ -10,6 +10,10 @@ import android.provider.MediaStore;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -29,6 +33,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.home.dz.R;
+import com.home.dz.adapter.ImagesAdapter;
 import com.home.dz.bean.Factory;
 import com.home.dz.bean.Home;
 import com.home.dz.bean.User;
@@ -67,7 +72,7 @@ public class AddHomeActivity extends AppCompatActivity implements View.OnClickLi
     private Button valider;
     private TextView email, phone, adresse;
     private Uri imageUri;
-
+    private RecyclerView listeImage;
     private String sTitre, sDescription, sAdresse, sWilaya;
     private long lPrix;
     private float fSurface;
@@ -81,6 +86,10 @@ public class AddHomeActivity extends AppCompatActivity implements View.OnClickLi
     private double homeLong;
     private double homeLat;
     private List<Feature> symbolLayerIconFeatureList;
+    private List<Uri> listURI = new ArrayList<>();
+    private ImagesAdapter adapter;
+    private int index = 0;
+    private List<String> listPhots = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,6 +110,16 @@ public class AddHomeActivity extends AppCompatActivity implements View.OnClickLi
         email = findViewById(R.id.anno_user_email_tv);
         phone = findViewById(R.id.anno_user_phone_tv);
         valider = findViewById(R.id.anno_valider_btn);
+        listeImage = findViewById(R.id.anno_listimages_rv);
+
+        LinearLayoutManager layoutManager
+                = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.HORIZONTAL, false);
+
+        adapter = new ImagesAdapter(listURI,this);
+        listeImage.setLayoutManager(layoutManager);
+        listeImage.setItemAnimator(new DefaultItemAnimator());
+        listeImage.setAdapter(adapter);
+        listeImage.setVisibility(View.GONE);
 
         mapView = findViewById(R.id.mapView);
         mapView.onCreate(savedInstanceState);
@@ -244,45 +263,80 @@ public class AddHomeActivity extends AppCompatActivity implements View.OnClickLi
             return;
         }
 
+        progressDoalog.show();
+        putImageInFirebase();
 
-        if(imageUri != null)
-        {
 
-            progressDoalog.show();
-            StorageReference image = FirebaseStorage.getInstance().getReference().child("Images").child(imageUri.getLastPathSegment()+ UUID.randomUUID().toString());
-            image.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    //here
-                    Task<Uri> urlTask = taskSnapshot.getStorage().getDownloadUrl();
-                    while (!urlTask.isSuccessful());
-                    Uri downloadUrl = urlTask.getResult();
-                    final String sdownload_url = String.valueOf(downloadUrl);
-                    String idHome = myRef.push().getKey();
-                    Home home = new Home();
-                    home.setIdHome(idHome);
-                    home.setTitre(sTitre);
-                    home.setDescription(sDescription);
-                    home.setPrix(lPrix);
-                    home.setAdresse(sAdresse);
-                    home.setWilaya(sWilaya);
-                    home.setSurface(fSurface);
-                    home.setLongitude(homeLong);
-                    home.setLatitude(homeLat);
-                    home.setUrlPhoto(sdownload_url);
-                    home.setUser(Factory.getUser());
-                    myRef.child("home").child(idHome).setValue(home);
-                    progressDoalog.dismiss();
 
-                }
-            });
+    }
+
+    private void putImageInFirebase() {
+
+        if(index < listURI.size()){
+            if(imageUri != null)
+            {
+
+                imageUri = listURI.get(index);
+                StorageReference image = FirebaseStorage.getInstance().getReference().child("Images").child(UUID.randomUUID().toString());
+                image.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        //here
+                        Task<Uri> urlTask = taskSnapshot.getStorage().getDownloadUrl();
+                        while (!urlTask.isSuccessful());
+                        Uri downloadUrl = urlTask.getResult();
+                        final String sdownload_url = String.valueOf(downloadUrl);
+                        listPhots.add(sdownload_url);
+
+                        if(index == listURI.size() - 1){
+                            String idHome = myRef.push().getKey();
+                            Home home = new Home();
+                            home.setIdHome(idHome);
+                            home.setTitre(sTitre);
+                            home.setDescription(sDescription);
+                            home.setPrix(lPrix);
+                            home.setAdresse(sAdresse);
+                            home.setWilaya(sWilaya);
+                            home.setSurface(fSurface);
+                            home.setLongitude(homeLong);
+                            home.setLatitude(homeLat);
+                            home.setUrlPhotos(listPhots);
+                            home.setUser(Factory.getUser());
+                            myRef.child("home").child(idHome).setValue(home);
+                        }
+
+                        index ++;
+                        putImageInFirebase();
+
+                    }
+                });
+            }
+        }else {
+            progressDoalog.dismiss();
         }
+
+
 
     }
 
     private void getPhotoFromGallery() {
         Intent gallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
         startActivityForResult(gallery, 100);
+    }
+
+    public void deleteImage(int position){
+        Uri myUri = listURI.get(position);
+        listURI.remove(myUri);
+        photo.setImageURI(listURI.get(0));
+        if(listURI.size() > 1){
+            listeImage.setVisibility(View.VISIBLE);
+        }else {
+            listeImage.setVisibility(View.GONE);
+        }
+    }
+
+    public void setPhoto(int position){
+        photo.setImageURI(listURI.get(position));
     }
 
     @Override
@@ -292,6 +346,13 @@ public class AddHomeActivity extends AppCompatActivity implements View.OnClickLi
         if (resultCode == RESULT_OK && requestCode == 100){
             imageUri = data.getData();
             photo.setImageURI(imageUri);
+            listURI.add(imageUri);
+            if(listURI.size() > 1){
+                listeImage.setVisibility(View.VISIBLE);
+            }else {
+                listeImage.setVisibility(View.GONE);
+            }
+            adapter.notifyDataSetChanged();
         }
 
         if (resultCode == Activity.RESULT_OK && requestCode == 200) {

@@ -13,45 +13,47 @@
         android:layout_marginEnd="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginHorizontal="@dimen/activity_horizontal_margin">
+            android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/textView4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Ajouter une annonce"
-                android:textStyle="bold"
-                android:textSize="30dp"
-                android:gravity="center"
                 android:layout_marginTop="32dp"
-                android:layout_marginBottom="32dp"/>
+                android:layout_marginBottom="32dp"
+                android:gravity="center"
+                android:text="Ajouter une annonce"
+                android:textSize="30dp"
+                android:textStyle="bold" />
 
             <EditText
                 android:id="@+id/anno_titre_et"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:ems="10"
                 android:layout_marginBottom="16dp"
-                android:inputType="textPersonName"
-                android:hint="Titre d'annonce" />
+                android:ems="10"
+                android:hint="Titre d'annonce"
+                android:inputType="textPersonName" />
 
             <EditText
                 android:id="@+id/anno_desc_et"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="Description"
-                android:maxLines="5"
                 android:layout_marginBottom="16dp"
+                android:ems="10"
                 android:gravity="start|top"
-                android:inputType="textMultiLine" />
+                android:hint="Description"
+                android:inputType="textMultiLine"
+                android:maxLines="5" />
 
             <EditText
                 android:id="@+id/anno_prix_et"
@@ -66,42 +68,42 @@
                 android:id="@+id/anno_surface_et"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
                 android:ems="10"
                 android:hint="Surface en m2"
-                android:layout_marginBottom="16dp"
                 android:inputType="numberDecimal" />
 
             <TextView
                 android:id="@+id/anno_adresse_tv"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
-                android:text="Adresse"
-                android:textSize="20dp"
+                android:layout_marginBottom="16dp"
                 android:gravity="center_vertical"
                 android:paddingHorizontal="8dp"
-                android:layout_marginBottom="16dp" />
+                android:text="Adresse"
+                android:textSize="20dp" />
 
             <Spinner
                 android:id="@+id/anno_wilaya_sp"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
-                android:layout_marginBottom="16dp"/>
+                android:layout_marginBottom="16dp" />
 
             <com.mapbox.mapboxsdk.maps.MapView
                 android:id="@+id/mapView"
                 android:layout_width="match_parent"
                 android:layout_height="250dp"
+                android:layout_marginBottom="16dp"
                 mapbox:mapbox_cameraTargetLat="35.79738794207789"
                 mapbox:mapbox_cameraTargetLng="-0.43765412653680935"
-                mapbox:mapbox_cameraZoom="14"
-                android:layout_marginBottom="16dp" />
+                mapbox:mapbox_cameraZoom="14" />
 
             <ImageView
                 android:id="@+id/anno_photo_img"
                 android:layout_width="match_parent"
                 android:layout_height="250dp"
-                android:scaleType="centerCrop"
                 android:layout_marginBottom="16dp"
+                android:scaleType="centerCrop"
                 app:srcCompat="@mipmap/ic_logo_background" />
 
             <ImageView
@@ -112,14 +114,19 @@
                 android:scaleType="centerCrop"
                 app:srcCompat="@drawable/ic_insert_photo_black_24dp" />
 
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/anno_listimages_rv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
             <TextView
                 android:id="@+id/textView3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
                 android:text="Contact"
                 android:textSize="20dp"
-                android:layout_marginBottom="8dp"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/anno_user_email_tv"
@@ -138,9 +145,9 @@
                 android:id="@+id/anno_valider_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:layout_marginTop="32dp"
                 android:layout_marginBottom="16dp"
-                android:layout_gravity="center"
                 android:text="Valider" />
         </LinearLayout>
     </ScrollView>
